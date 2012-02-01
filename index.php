@@ -36,18 +36,9 @@ if(isset($_GET) && array_key_exists("output", $_GET) && !empty($_GET["output"]) 
 	}
 }
 
-$requested_format = null;
-if (isset($_SERVER) && array_key_exists('PATH_INFO', $_SERVER) && !empty($_SERVER["PATH_INFO"])) {
-	$requested_format = strtolower(trim(trim($_SERVER['PATH_INFO'], "/")));
-} else if(isset($_SERVER) && array_key_exists('ORIG_PATH_INFO', $_SERVER) && !empty($_GET["ORIG_PATH_INFO"])) {
-	$requested_format = strtolower(trim(trim($_SERVER['ORIG_PATH_INFO'], "/")));
-} else if(isset($_SERVER) && array_key_exists("REQUEST_URI", $_SERVER) && !empty($_SERVER["REQUEST_URI"]) && strpos("/", $_SERVER["REQUEST_URI"]) !== False){
-	$farg = strpos($_SERVER['REQUEST_URI'], '?');
-	$requested_format = strtolower(trim(trim(substr($_SERVER['REQUEST_URI'], 0, $farg), "/")));
-}
-
-if(empty($requested_format)) {
-	$requested_format = "plain";
+$requested_format = "plain";
+if(isset($_GET) && array_key_exists("format", $_GET) && !empty($_GET["format"])) {
+	$requested_format = $_GET["format"];
 }
 
 if($extended === True) {
